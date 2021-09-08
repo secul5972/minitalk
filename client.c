@@ -6,7 +6,7 @@
 /*   By: seungcoh <seungcoh@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:37:21 by seungcoh          #+#    #+#             */
-/*   Updated: 2021/09/08 19:13:37 by seungcoh         ###   ########.fr       */
+/*   Updated: 2021/09/08 21:38:30 by seungcoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,27 +16,27 @@ void	send_signal(int pid, char *str)
 {
 	int		i;
 	int		digit;
-	int		flag;
 	char	curr;
 
 	i = 0;
-	flag = 1;
-	while (flag)
+	while (1)
 	{
-		if (str[i] == 0)
-			flag = 0;
 		digit = 128;
-		curr = str[i++];
+		curr = str[i];
 		while (digit > 0)
 		{
 			if (curr / digit)
-				kill(pid, SIGUSR1);
-			else
-				kill(pid, SIGUSR2);
+				if (kill(pid, SIGUSR1) == -1)
+					exit(1);
+			if (curr / digit == 0)
+				if (kill(pid, SIGUSR2) == -1)
+					exit(1);
 			curr %= digit;
 			digit /= 2;
 			usleep(1000);
 		}
+		if (str[i++] == 0)
+			break ;
 	}
 }
 
@@ -53,7 +53,7 @@ int	main(int argv, char **argc)
 		flag = 1;
 	if (flag)
 	{
-		write(1, "parameter error\n", 17);
+		write(2, "parameter error\n", 17);
 		return (0);
 	}
 	send_signal(pid, argc[2]);

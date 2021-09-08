@@ -6,7 +6,7 @@
 /*   By: seungcoh <seungcoh@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:50:13 by seungcoh          #+#    #+#             */
-/*   Updated: 2021/09/08 19:17:10 by seungcoh         ###   ########.fr       */
+/*   Updated: 2021/09/08 21:25:31 by seungcoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	ft_atoi(const char *str)
 		ret += str[i] - '0';
 		i++;
 	}
-	if (str[i] != 0 || ret < 100)
-		ret = 0;
+	if (str[i] != 0 || ret < 100 || ret >= 99999)
+		ret = -1;
 	return (ret);
 }
 

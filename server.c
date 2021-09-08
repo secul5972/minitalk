@@ -6,7 +6,7 @@
 /*   By: seungcoh <seungcoh@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 14:14:09 by seungcoh          #+#    #+#             */
-/*   Updated: 2021/09/08 19:10:00 by seungcoh         ###   ########.fr       */
+/*   Updated: 2021/09/08 21:44:56 by seungcoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(void)
 	c_pid = ft_itoa(pid);
 	if (c_pid == 0)
 	{
-		write(1, "malloc error\n", 14);
+		write(2, "malloc error\n", 14);
 		return (0);
 	}
 	write(1, "server pid : ", 14);
@@ -50,7 +50,9 @@ int	main(void)
 	free(c_pid);
 	while (1)
 	{
-		signal(SIGUSR1, signal_handler);
-		signal(SIGUSR2, signal_handler);
+		if (signal(SIGUSR1, signal_handler) == SIG_ERR)
+			exit(1);
+		if (signal(SIGUSR2, signal_handler) == SIG_ERR)
+			exit(1);
 	}
 }
