@@ -6,7 +6,7 @@
 /*   By: seungcoh <seungcoh@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 13:37:21 by seungcoh          #+#    #+#             */
-/*   Updated: 2021/09/08 21:38:30 by seungcoh         ###   ########.fr       */
+/*   Updated: 2021/10/27 12:16:44 by seungcoh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,17 @@ void	send_signal(int pid, char *str)
 
 int	main(int argv, char **argc)
 {
-	int	flag;
 	int	pid;
 
-	flag = 0;
 	if (argv != 3)
-		flag = 1;
-	pid = atoi(argc[1]);
-	if (pid < 0)
-		flag = 1;
-	if (flag)
 	{
 		write(2, "parameter error\n", 17);
+		return (0);
+	}
+	pid = ft_atoi(argc[1]);
+	if (pid < 0)
+	{
+		write(2, "pid error\n", 10);
 		return (0);
 	}
 	send_signal(pid, argc[2]);
